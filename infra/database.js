@@ -9,10 +9,16 @@ async function query(objeto) {
     password: process.env.POSTGRES_PASSWORD,
   });
   await client.connect();
-  const resultado = await client.query(objeto);
+  try {
+    const resultado = await client.query(objeto);
+    return resultado;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    await client.end();
+  }
+
   // tá recebendo um prompt (objeto) .  O client vai se conectar ao psql e fzr essa query
-  await client.end();
-  return resultado;
 }
 
 export default {

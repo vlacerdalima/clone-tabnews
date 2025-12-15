@@ -1,5 +1,4 @@
 import database from "infra/database.js";
-import { version } from "react";
 
 async function aux(request, response) {
   const agr = new Date().toISOString();
@@ -8,9 +7,12 @@ async function aux(request, response) {
   const pedir_versao = await database.query(
     "SELECT current_setting('server_version') AS versao_numero;",
   );
-  const conecAgr = await database.query(
-    "SELECT count(*) AS current FROM pg_stat_activity WHERE datname = 'db_local';",
-  );
+  const banco = process.env.POSTGRES_DB;
+
+  const conecAgr = await database.query({
+    text: "SELECT count(*) AS current FROM pg_stat_activity WHERE datname = $1;",
+    values: [banco],
+  });
   const conecMax = await database.query(
     "SELECT setting::int AS max_connections FROM pg_settings WHERE name = 'max_connections';",
   );
