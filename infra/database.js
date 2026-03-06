@@ -1,8 +1,6 @@
 import { Client } from "pg";
 
 async function query(objeto) {
-  console.log("resultado: " + process.env.POSTGRES_HOST);
-
   const client = new Client({
     host: process.env.POSTGRES_HOST,
     port: process.env.POSTGRES_PORT,
@@ -37,5 +35,5 @@ function pegassl() {
       ca: process.env.POSTGRES_CA,
     };
   }
-  return process.env.NODE_ENV === "development" ? false : true;
+  return process.env.NODE_ENV === "production" ? true : false;
 }
