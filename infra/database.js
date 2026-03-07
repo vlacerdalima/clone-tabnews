@@ -1,17 +1,9 @@
 import { Client } from "pg";
 
 async function query(objeto) {
-  const client = new Client({
-    host: process.env.POSTGRES_HOST,
-    port: process.env.POSTGRES_PORT,
-    user: process.env.POSTGRES_USER,
-    database: process.env.POSTGRES_DB,
-    password: process.env.POSTGRES_PASSWORD,
-    ssl: pegassl(),
-  });
-
+  let client;
   try {
-    await client.connect();
+    client = await getNewClient();
     const resultado = await client.query(objeto);
     return resultado;
   } catch (error) {
@@ -25,9 +17,21 @@ async function query(objeto) {
 }
 
 export default {
-  query: query,
+  query,
+  getNewClient,
 };
-
+async function getNewClient() {
+  const client = new Client({
+    host: process.env.POSTGRES_HOST,
+    port: process.env.POSTGRES_PORT,
+    user: process.env.POSTGRES_USER,
+    database: process.env.POSTGRES_DB,
+    password: process.env.POSTGRES_PASSWORD,
+    ssl: pegassl(),
+  });
+  await client.connect();
+  return client;
+}
 function pegassl() {
   // futuramente precisando de um CA pode-se definir aq
   if (process.env.POSTGRES_CA) {
