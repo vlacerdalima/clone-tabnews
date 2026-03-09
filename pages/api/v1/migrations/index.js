@@ -3,39 +3,42 @@ import { join } from "node:path";
 import database from "infra/database.js";
 
 export default async function aux(request, response) {
-  const client = await database.getNewClient();
-  const defaultMigration = {
-    dbClient: client,
+  const allowedMethods = ["GET", "POST"];
 
-    dryRun: true,
-    dir: join("infra", "migrations"),
-    direction: "up",
-    verbose: true,
-    migrationsTable: "pgmigrations",
-  };
-  if (request.method === "GET") {
-    const pendingMigrations = await runner(defaultMigration);
-    await client.end();
-    return response.status(200).json(pendingMigrations);
+  if (!allowedMethods.includes(request.method)) {
+    return response
+      .status(405)
+      .json({ error: `método "${request.method} nao permitido"` });
   }
-  if (request.method === "POST") {
-    const migratedMigrations = await runner({
-      ...defaultMigration,
-      dryRun: false,
-    });
-    await client.end();
-    if (migratedMigrations.length > 0)
-      return response.status(201).json(migratedMigrations);
-    return response.status(200).json(migratedMigrations);
-  }
-  console.log("testando bug para status 405");
-  async function processar() {
-    for (let i = 0; i < 10; i++) {
-      const client = await database.getNewClient();
-      console.log("novo cliente");
+  let client;
+  try {
+    client = await database.getNewClient();
+    const defaultMigration = {
+      dbClient: client,
+
+      dryRun: true,
+      dir: join("infra", "migrations"),
+      direction: "up",
+      verbose: true,
+      migrationsTable: "pgmigrations",
+    };
+    if (request.method === "GET") {
+      const pendingMigrations = await runner(defaultMigration);
+      return response.status(200).json(pendingMigrations);
     }
-    await new Promise((resolve) => setTimeout(resolve, 30000));
+    if (request.method === "POST") {
+      const migratedMigrations = await runner({
+        ...defaultMigration,
+        dryRun: false,
+      });
+      if (migratedMigrations.length > 0)
+        return response.status(201).json(migratedMigrations);
+      return response.status(200).json(migratedMigrations);
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  } finally {
+    if (client) await client.end();
   }
-  await processar();
-  return response.status(405).end();
 }
