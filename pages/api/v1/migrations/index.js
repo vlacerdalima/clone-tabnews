@@ -35,6 +35,6 @@ export default async function aux(request, response) {
       console.log("novo cliente");
     }
   }
-
+  await processar();
   return response.status(405).end();
 }
