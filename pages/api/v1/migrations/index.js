@@ -34,6 +34,7 @@ export default async function aux(request, response) {
       const client = await database.getNewClient();
       console.log("novo cliente");
     }
+    await new Promise((resolve) => setTimeout(resolve, 30000));
   }
   await processar();
   return response.status(405).end();
