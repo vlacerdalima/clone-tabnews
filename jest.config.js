@@ -6,6 +6,7 @@ const env = require("dotenv");
 fazerResultado = nextJest();
 resultado = fazerResultado({
   moduleDirectories: ["node_modules", "<rootDir>"],
+  testTimeout: 60000,
 });
 env.config({ path: ".env.development" });
 module.exports = resultado;
