@@ -3,8 +3,8 @@
 
 const nextJest = require("next/jest");
 const env = require("dotenv");
-fazerResultado = nextJest();
-resultado = fazerResultado({
+const fazerResultado = nextJest();
+const resultado = fazerResultado({
   moduleDirectories: ["node_modules", "<rootDir>"],
   testTimeout: 60000,
 });
