@@ -1,0 +1,20 @@
+name: Gitleaks Scan
+
+on:
+  pull_request:
+  push:
+    branches: [main, master, hooks, gitleaks] # Adicionei suas branches atuais para teste
+
+jobs:
+  scan:
+    name: Gitleaks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Gitleaks Scan
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
