@@ -15,5 +15,5 @@ test("GET do status tem que dar 200", async () => {
   expect(corpo.data_agr).toEqual(horaAgr);
   expect(corpo.psql_version).toBe("16.11");
   expect(corpo.conexoes_maximas).toBe(100);
-  expect(corpo.conexos_agora).toBe(1);
+  expect(corpo.conexoes_agora).toBe(1);
 });

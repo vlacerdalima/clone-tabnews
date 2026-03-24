@@ -27,7 +27,7 @@ async function aux(request, response) {
     data_agr: agr,
     psql_version: versao,
     conexoes_maximas: conexoesMaximas,
-    conexos_agora: qtdAgr,
+    conexoes_agora: qtdAgr,
   });
 }
 
