@@ -8,9 +8,9 @@ async function query(objeto) {
     return resultado;
   } catch (error) {
     console.error(error);
-    throw error;
+    throw new Error(error);
   } finally {
-    await client.end();
+    await client?.end();
   }
 
   // tá recebendo um prompt (objeto) .  O client vai se conectar ao psql e fzr essa query
