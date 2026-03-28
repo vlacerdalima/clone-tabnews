@@ -1,25 +1,12 @@
 import database from "infra/database.js";
-import { InternalServerError } from "infra/errors";
 import { createRouter } from "next-connect";
-import { MethodNotAllowedError } from "infra/errors";
+import controller from "infra/controller";
 
 const router = createRouter();
 
 router.get(GetHandler);
-export default router.handler({
-  onNoMatch: onNoMatchHandler,
-  onError: onErrorHandler,
-});
-function onNoMatchHandler(request, response) {
-  const erroPublico = new MethodNotAllowedError();
-  response.status(405).json(erroPublico);
-}
-function onErrorHandler(error, response) {
-  const erroPublico = new InternalServerError({ cause: error });
-  console.log("Erro no next-connect");
-  console.error(erroPublico);
-  response.status(500).json(erroPublico);
-}
+
+export default router.handler(controller.errorHandlers);
 async function GetHandler(request, response) {
   const agr = new Date().toISOString();
   //como o objeto criado pelo date nao será mais referenciado , diferente de cpp o objeto será
