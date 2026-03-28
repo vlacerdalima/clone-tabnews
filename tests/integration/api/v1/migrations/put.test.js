@@ -16,7 +16,5 @@ test("PUT do migrations tem que dar 405", async () => {
   const resp = await fetch("http://localhost:3000/api/v1/migrations", {
     method: "PUT",
   });
-  const corpo = await resp.json();
-  console.log(corpo);
   expect(resp.status).toBe(405);
 });
