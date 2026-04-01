@@ -36,7 +36,8 @@ async function runPendingMigrations() {
       dryRun: true,
       dir: join("infra", "migrations"),
       direction: "up",
-      verbose: true,
+      logger: () => {},
+      verbose: false,
       migrationsTable: "pgmigrations",
     };
 
