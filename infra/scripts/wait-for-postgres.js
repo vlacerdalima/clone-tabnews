@@ -1,7 +1,7 @@
 // objetivo daq é gerar uma flag para dizer se a db
 // está acessível para nao ter RC com as migrations
 
-const { exec } = require("node:child_process");
+import { exec } from "node:child_process";
 
 function checa() {
   exec("docker exec postgres-dev pg_isready --host localhost", lide);
