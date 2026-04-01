@@ -2,6 +2,7 @@ import {
   MethodNotAllowedError,
   InternalServerError,
   ValidationError,
+  NotFoundError,
 } from "infra/errors";
 
 export default {
@@ -16,7 +17,7 @@ function onNoMatchHandler(request, response) {
   response.status(erroPublico.statusCode).json(erroPublico);
 }
 function onErrorHandler(error, request, response) {
-  if (error instanceof ValidationError) {
+  if (error instanceof ValidationError || error instanceof NotFoundError) {
     return response.status(error.statusCode).json(error);
   }
 
