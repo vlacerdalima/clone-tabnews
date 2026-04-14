@@ -3,6 +3,7 @@ import {
   InternalServerError,
   ValidationError,
   NotFoundError,
+  UnauthorizedError,
 } from "infra/errors";
 
 export default {
@@ -17,13 +18,16 @@ function onNoMatchHandler(request, response) {
   response.status(erroPublico.statusCode).json(erroPublico);
 }
 function onErrorHandler(error, request, response) {
-  if (error instanceof ValidationError || error instanceof NotFoundError) {
+  if (
+    error instanceof ValidationError ||
+    error instanceof NotFoundError ||
+    error instanceof UnauthorizedError
+  ) {
     return response.status(error.statusCode).json(error);
   }
 
   const erroPublico = new InternalServerError({
     motivo_do_erro: error,
-    statusCode: error.statusCode,
   });
   console.error(erroPublico);
   response.status(erroPublico.statusCode).json(erroPublico);
