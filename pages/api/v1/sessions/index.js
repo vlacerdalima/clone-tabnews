@@ -7,7 +7,18 @@ import * as cookie from "cookie";
 const router = createRouter();
 
 router.post(postHandler);
+router.delete(deleteHandler);
 export default router.handler(controller.errorHandlers);
+
+async function deleteHandler(request, response) {
+  const sessionToken = request.cookies.session_id;
+
+  const sessionObject = await session.findOneValidByToken(sessionToken);
+  const expiredSession = await session.expireById(sessionObject.id);
+  controller.clearSessionCookie(response);
+
+  return response.status(200).json(expiredSession);
+}
 
 async function postHandler(request, response) {
   const userInputValues = request.body;
