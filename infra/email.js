@@ -11,7 +11,10 @@ const transporter = nodemailer.createTransport({
 });
 
 async function send(mailOptions) {
-  await transporter.sendMail(mailOptions);
+  await transporter.sendMail({
+    from: "FinTab <contato@fintab.com.br",
+    ...mailOptions,
+  });
 }
 
 const email = {
