@@ -73,6 +73,15 @@ async function getLastEmail() {
   return lastEmailItem;
 }
 
+async function findToken(email) {
+  const regex =
+    /\/cadastro\/ativar\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/i;
+
+  const result = regex.exec(email);
+
+  return result ? result[1] : null;
+}
+
 export default {
   waitForAllServices,
   limpa,
@@ -81,4 +90,5 @@ export default {
   createSession,
   deleteAllEmails,
   getLastEmail,
+  findToken,
 };
