@@ -5,7 +5,8 @@ import activation from "models/activation.js";
 
 const router = createRouter();
 
-router.post(PostHandler);
+router.use(controller.injectAnonymousOrUser);
+router.post(controller.canRequest("create:user"), PostHandler);
 export default router.handler(controller.errorHandlers);
 
 async function PostHandler(request, response) {
