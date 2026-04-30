@@ -2,6 +2,8 @@ import { createRouter } from "next-connect";
 import controller from "infra/controller";
 import authentication from "models/authentication.js";
 import session from "models/session.js";
+import authorization from "models/authorization";
+import { ForbiddenError } from "infra/errors";
 
 const router = createRouter();
 
@@ -29,9 +31,46 @@ async function postHandler(request, response) {
     userInputValues.password,
   );
 
+  if (!authorization.can(authenticatedUser, "create:session")) {
+    throw new ForbiddenError({
+      message: "Você não possui permissão para fazer login.",
+      action: "Contate o suporte caso você acredite que isto seja um erro.",
+    });
+  }
+
   const newSession = await session.create(authenticatedUser.id);
 
   controller.setSessionCookie(newSession.token, response);
 
   return response.status(201).json(newSession);
 }
+
+/*
+async function postHandler(request, response) {
+  try {
+    const userInputValues = request.body;
+
+    const authenticatedUser = await authentication.getAuthenticatedUser(
+      userInputValues.email,
+      userInputValues.password,
+    );
+
+    if (!authorization.can(authenticatedUser, "create:session")) {
+      throw new ForbiddenError({
+        message: "Você não possui permissão para fazer login.",
+        action: "Contate o suporte caso você acredite que isto seja um erro.",
+      });
+    }
+
+    const newSession = await session.create(authenticatedUser.id);
+    controller.setSessionCookie(newSession.token, response);
+
+    return response.status(201).json(newSession);
+    
+  } catch (error) {
+    // Pegamos o erro no pulo e forçamos o encerramento da requisição HTTP!
+    // Sem isso, a conexão ficava aberta dando timeout no Jest.
+    return controller.errorHandlers.onError(error, request, response);
+  }
+}
+*/

@@ -10,6 +10,7 @@ import {
 import * as cookie from "cookie";
 import session from "models/session.js";
 import user from "models/user";
+import authorization from "models/authorization";
 
 export default {
   errorHandlers: {
@@ -26,7 +27,7 @@ function canRequest(feature) {
   return function canRequestMiddleware(request, response, next) {
     const userTryingToRequest = request.context.user;
 
-    if (userTryingToRequest.features.includes(feature)) {
+    if (authorization.can(userTryingToRequest, feature)) {
       return next();
     }
 
@@ -46,7 +47,7 @@ async function injectAnonymousOrUser(request, response, next) {
     injectAnonymousUser(request);
   }
 
-  next();
+  return next();
 }
 
 async function injectAuthenticatedUser(request) {
