@@ -52,7 +52,7 @@ describe("GET /api/v1/user", () => {
         username: "UserWithValidSession",
         email: corpo.email,
         password: corpo.password,
-        features: ["create:session", "read:session"],
+        features: ["create:session", "read:session", "update:user"],
         created_at: corpo.created_at,
         updated_at: corpo.updated_at,
       });
