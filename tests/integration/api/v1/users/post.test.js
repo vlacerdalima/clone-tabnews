@@ -30,8 +30,6 @@ describe("POST /api/v1/users", () => {
       expect(corpo).toEqual({
         id: corpo.id,
         username: "vitorlacerda",
-        email: "vlacerdalima@gmail.com",
-        password: corpo.password,
         features: ["read:activation_token"],
         created_at: corpo.created_at,
         updated_at: corpo.updated_at,

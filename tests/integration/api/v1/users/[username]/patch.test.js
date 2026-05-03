@@ -200,8 +200,6 @@ describe("PATCH /api/v1/users/[username]", () => {
       expect(corpo).toEqual({
         id: corpo.id,
         username: "uniqueUser2",
-        email: "uniqueUser1@gmail.com",
-        password: corpo.password,
         features: corpo.features,
         created_at: corpo.created_at,
         updated_at: corpo.updated_at,
@@ -242,8 +240,6 @@ describe("PATCH /api/v1/users/[username]", () => {
       expect(corpo).toEqual({
         id: corpo.id,
         username: "uniqueEmail1",
-        email: "uniqueEmail2@gmail.com",
-        password: corpo.password,
         features: corpo.features,
         created_at: corpo.created_at,
         updated_at: corpo.updated_at,
@@ -284,8 +280,6 @@ describe("PATCH /api/v1/users/[username]", () => {
       expect(corpo).toEqual({
         id: corpo.id,
         username: "newPassword1",
-        email: "newPassword1@gmail.com",
-        password: corpo.password,
         features: corpo.features,
         created_at: corpo.created_at,
         updated_at: corpo.updated_at,
@@ -352,8 +346,6 @@ describe("PATCH /api/v1/users/[username]", () => {
       expect(corpo).toEqual({
         id: defaultUser.id,
         username: "alteradoPorPrivilegiado",
-        email: defaultUser.email,
-        password: corpo.password,
         features: activatedDefaultUser.features,
         created_at: corpo.created_at,
         updated_at: corpo.updated_at,

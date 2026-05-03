@@ -22,8 +22,6 @@ describe("GET /api/v1/users/[username]", () => {
       expect(corpo).toEqual({
         id: corpo.id,
         username: "MesmoCase",
-        email: "mesmo.case@gmail.com",
-        password: corpo.password,
         features: ["read:activation_token"],
         created_at: corpo.created_at,
         updated_at: corpo.updated_at,
@@ -50,8 +48,6 @@ describe("GET /api/v1/users/[username]", () => {
       expect(corpo).toEqual({
         id: corpo.id,
         username: "casediferente",
-        email: "case.diferente@gmail.com",
-        password: corpo.password,
         features: ["read:activation_token"],
         created_at: corpo.created_at,
         updated_at: corpo.updated_at,

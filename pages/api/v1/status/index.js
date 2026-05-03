@@ -3,17 +3,24 @@ import { createRouter } from "next-connect";
 import controller from "infra/controller";
 
 const router = createRouter();
-
+router.use(controller.injectAnonymousOrUser);
 router.get(GetHandler);
-
+// proxima tarefa é pensar como rodar um get para usuario normal e um get para usuario priv
 export default router.handler(controller.errorHandlers);
 async function GetHandler(request, response) {
   const agr = new Date().toISOString();
   //como o objeto criado pelo date nao será mais referenciado , diferente de cpp o objeto será
   // deletado sozinho
-  const pedir_versao = await database.query(
-    "SELECT current_setting('server_version') AS versao_numero;",
-  );
+  let versao = null;
+  const features = request.context?.user?.features || [];
+
+  if (features.includes("read:database")) {
+    const pedir_versao = await database.query(
+      "SELECT current_setting('server_version') AS versao_numero;",
+    );
+    versao = pedir_versao.rows[0].versao_numero;
+  }
+
   const banco = process.env.POSTGRES_DB;
 
   const conecAgr = await database.query({
@@ -26,14 +33,15 @@ async function GetHandler(request, response) {
 
   const conexoesMaximas = parseInt(conecMax.rows[0].max_connections);
   const qtdAgr = parseInt(conecAgr.rows[0].current);
-  const versao = pedir_versao.rows[0].versao_numero;
-  // console.log(versao);
-  // console.log(qtdAgr);
-  // console.log(conexoesMaximas);
-  response.status(200).json({
+  const responseBody = {
     data_agr: agr,
-    psql_version: versao,
     conexoes_maximas: conexoesMaximas,
     conexoes_agora: qtdAgr,
-  });
+  };
+
+  if (versao) {
+    responseBody.psql_version = versao;
+  }
+
+  return response.status(200).json(responseBody);
 }

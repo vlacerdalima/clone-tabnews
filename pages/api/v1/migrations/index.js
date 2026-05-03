@@ -3,8 +3,9 @@ import controller from "infra/controller";
 import migrator from "models/migrator.js";
 const router = createRouter();
 
-router.get(GetHandler);
-router.post(PostHandler);
+router.use(controller.injectAnonymousOrUser);
+router.get(controller.canRequest("read:database"), GetHandler);
+router.post(controller.canRequest("read:database"), PostHandler);
 export default router.handler(controller.errorHandlers);
 
 async function GetHandler(request, response) {
