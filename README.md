@@ -1,28 +1,68 @@
-Este é um README genérico gerado por IA para servir como placeholder até que o conteúdo definitivo seja adicionado.
+# TabNews
 
-🚀 Clone TabNews - Projeto do Curso.dev
-Este repositório contém o código desenvolvido durante o Curso.dev, ministrado pelo Filipe Deschamps. O objetivo do projeto é construir um ecossistema de conteúdo com "valor concreto" para quem o consome, focando em práticas de engenharia de software de alto nível.
+Implementação do [TabNews](https://www.tabnews.com.br) construída do zero como projeto prático do [curso.dev](https://curso.dev).
 
-💻 Sobre o Projeto
-O projeto consiste na criação de uma plataforma inspirada no TabNews, focando não apenas no resultado final, mas em todo o processo profissional de desenvolvimento, incluindo:
+> **Status:** API em desenvolvimento ativo. Frontend em construção, as aulas dessa etapa ainda estão sendo gravadas no curso.
 
-Engenharia de Software: Arquitetura limpa e escalável.
+🔗 **Aplicação em produção:** [Clone Tabnews](clone-tabnews-zeta-liart.vercel.app)
 
-Protocolo HTTP: Entendimento profundo de como a web funciona.
+## Sobre o projeto
 
-Resiliência: Tratamento de erros e segurança.
+Este repositório contém minha implementação do TabNews, desenvolvida ao longo de 17 módulos do curso.dev, ministrado por [Filipe Deschamps](https://github.com/filipedeschamps).
 
-CI/CD: Deploy automatizado e integração contínua.
+A proposta pedagógica do curso é incomum: reconstruir o TabNews do zero, implementando manualmente tudo que normalmente seria abstraído por uma ORM ou biblioteca pronta. O resultado é uma compreensão profunda das engrenagens do desenvolvimento web fullstack.
 
-🛠 Tecnologias Utilizadas
-Linguagem: JavaScript / TypeScript
+**O que foi implementado manualmente:**
 
-Framework: Next.js
+- Sistema de autenticação e autorização
+- Controle de sessão e geração de cookies
+- Criptografia de senhas
+- Conexão direta com PostgreSQL (sem ORM)
+- Migrations com `node-pg-migrate`
+- Testes automatizados (TDD)
+- Pipeline de CI/CD
 
-Ambiente: Node.js
+**Nenhuma linha de código deste projeto foi gerada por IA.**
 
-Banco de Dados: PostgreSQL
+## Stack
 
-Testes: Jest
+- **Runtime:** Node.js
+- **Framework:** Next.js
+- **Banco de dados:** PostgreSQL
+- **Migrations:** node-pg-migrate
+- **Ambiente de desenvolvimento:** Docker + Docker Compose
+- **Testes:** Jest
+- **CI/CD:** GitHub Actions
+- **Deploy:** Vercel
 
-Hospedagem: Vercel
+## Endpoints da API
+
+A maior parte dos endpoints é protegida por autenticação via cookie de sessão e features privilegiadas. Como o frontend ainda está em construção, ainda não há fluxo de login pela interface.Dessa forma, as rotas privadas só podem ser exploradas via cliente HTTP (Postman, Insomnia, curl) com sessão válida.
+
+## Roadmap
+
+- [x] Configuração inicial do projeto
+- [x] Conexão com PostgreSQL
+- [x] Sistema de migrations
+- [x] CRUD de usuários
+- [x] Sistema de autenticação
+- [x] Controle de sessão e cookies
+- [x] Testes automatizados
+- [x] CI/CD
+- [ ] Frontend (em desenvolvimento)
+- [ ] Sistema de conteúdos
+- [ ] Sistema de votação (TabCoins)
+
+## Créditos
+
+Projeto desenvolvido durante o [curso.dev](https://curso.dev), ministrado por [Filipe Deschamps](https://github.com/filipedeschamps).
+
+Inspirado pelo [TabNews](https://www.tabnews.com.br), criado pelo próprio Filipe e mantido pela comunidade.
+
+## Licença
+
+[MIT](LICENSE)
+
+---
+
+Desenvolvido por [Vitor Lacerda Lima](https://github.com/vlacerdalima).
