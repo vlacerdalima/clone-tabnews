@@ -1,7 +1,7 @@
 import orchestrator from "tests/orchestrator.js";
 import { version as uuidVersion } from "uuid";
 import session from "models/session.js";
-import { expect, jest } from "@jest/globals";
+import { expect, jest, test } from "@jest/globals";
 import setCookieParser from "set-cookie-parser";
 
 beforeAll(async () => {
@@ -12,11 +12,24 @@ beforeAll(async () => {
 
 describe("GET /api/v1/user", () => {
   describe("Anonymous user", () => {
+    test("Retrieving forbidden endpoint", async () => {
+      const response = await fetch("http://localhost:3000/api/v1/user");
+      expect(response.status).toBe(403);
+      const responseBody = await response.json();
+
+      expect(responseBody).toEqual({
+        name: "ForbiddenError",
+        action: "Verifique se o seu usuário possui a feature read:session",
+        message: "Você não possui permissão para executar esta ação.",
+        status_code: 403,
+      });
+    });
+
     test("With valid session", async () => {
       const createdUser = await orchestrator.createUser({
         username: "UserWithValidSession",
       });
-
+      await orchestrator.activateUser(createdUser);
       const sessionObject = await orchestrator.createSession(createdUser.id);
 
       const resp2 = await fetch("http://localhost:3000/api/v1/user", {
@@ -39,6 +52,7 @@ describe("GET /api/v1/user", () => {
         username: "UserWithValidSession",
         email: corpo.email,
         password: corpo.password,
+        features: ["create:session", "read:session", "update:user"],
         created_at: corpo.created_at,
         updated_at: corpo.updated_at,
       });

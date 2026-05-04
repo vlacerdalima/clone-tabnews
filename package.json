@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "npm run services:up && npm run services:wait:database && npm run migrations:up && next dev",
-    "test": "npm run services:up && NODE_OPTIONS='--experimental-vm-modules' concurrently --names next,jest --hide next -k -s command-jest \"next dev\" \"jest --runInBand\"",
+    "test": "npm run services:up && NODE_OPTIONS='--experimental-vm-modules' concurrently --names next,jest --hide next -k -s command-jest \"next dev\" \"jest --runInBand --bail --detectOpenHandles --forceExit\"",
     "test:watch": "NODE_OPTIONS='--experimental-vm-modules' jest --watchAll --runInBand",
     "posttest": "npm run services:stop",
     "services:up": "docker compose -f infra/compose.yaml up -d",

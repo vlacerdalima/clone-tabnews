@@ -4,6 +4,7 @@ import database from "infra/database.js";
 import migrator from "models/migrator.js";
 import user from "models/user.js";
 import session from "models/session";
+import activation from "models/activation";
 
 const emailHttpUrl = `http://${process.env.EMAIL_HTTP_HOST}:${process.env.EMAIL_HTTP_PORT}`;
 
@@ -62,6 +63,8 @@ async function getLastEmail() {
   const emailListBody = await emailListResponse.json();
   const lastEmailItem = emailListBody.pop();
 
+  if (!lastEmailItem) return null;
+
   const emailTextResponse = await fetch(
     `${emailHttpUrl}/messages/${lastEmailItem.id}.plain`,
   );
@@ -69,6 +72,24 @@ async function getLastEmail() {
 
   lastEmailItem.text = emailTextBody;
   return lastEmailItem;
+}
+
+async function findToken(email) {
+  const regex =
+    /\/cadastro\/ativar\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/i;
+
+  const result = regex.exec(email);
+
+  return result ? result[1] : null;
+}
+
+async function activateUser(inactiveUser) {
+  return await activation.activateUserByUserId(inactiveUser.id);
+}
+
+async function addFeaturesToUser(userObject, features) {
+  const updatedUser = await user.addFeatures(userObject.id, features);
+  return updatedUser;
 }
 
 export default {
@@ -79,4 +100,7 @@ export default {
   createSession,
   deleteAllEmails,
   getLastEmail,
+  findToken,
+  activateUser,
+  addFeaturesToUser,
 };
