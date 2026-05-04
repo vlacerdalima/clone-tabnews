@@ -37,7 +37,7 @@ A proposta pedagógica do curso é incomum: reconstruir o TabNews do zero, imple
 
 ## Endpoints da API
 
-A maior parte dos endpoints é protegida por autenticação via cookie de sessão e features privilegiadas. Como o frontend ainda está em construção, ainda não há fluxo de login pela interface.Dessa forma, as rotas privadas só podem ser exploradas via cliente HTTP (Postman, Insomnia, curl) com sessão válida.
+A maior parte dos endpoints é protegida por autenticação via cookie de sessão e features privilegiadas. Como o frontend ainda está em construção, ainda não há fluxo de login pela interface. Dessa forma, as rotas privadas só podem ser exploradas via cliente HTTP (Postman, Insomnia, curl) com sessão válida.
 
 ## Roadmap
 
