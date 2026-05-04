@@ -4,7 +4,7 @@ Implementação do [TabNews](https://www.tabnews.com.br) construída do zero com
 
 > **Status:** API em desenvolvimento ativo. Frontend em construção, as aulas dessa etapa ainda estão sendo gravadas no curso.
 
-🔗 **Aplicação em produção:** [Clone Tabnews](clone-tabnews-zeta-liart.vercel.app)
+🔗 **Aplicação em produção:** [Clone Tabnews](https://clone-tabnews-zeta-liart.vercel.app)
 
 ## Sobre o projeto
 
