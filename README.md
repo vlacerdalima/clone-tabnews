@@ -4,8 +4,6 @@ Implementação do [TabNews](https://www.tabnews.com.br) construída do zero com
 
 > **Status:** API em desenvolvimento ativo. Frontend em construção, as aulas dessa etapa ainda estão sendo gravadas no curso.
 
-🔗 **Aplicação em produção:** [Clone Tabnews](clone-tabnews-zeta-liart.vercel.app)
-
 ## Sobre o projeto
 
 Este repositório contém minha implementação do TabNews, desenvolvida ao longo de 17 módulos do curso.dev, ministrado por [Filipe Deschamps](https://github.com/filipedeschamps).
